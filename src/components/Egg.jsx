@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 function Egg(props){
   return(
     <div className='egg'>
-      <Screen tamagotchi={props.tamagotchi} user={props.user} />
+      <Screen tamagotchi={props.tamagotchi} user={props.user} onRestart={props.onRestart}/>
       <Buttons onFeedTamagotchi={props.onFeedTamagotchi}
               onPlayTamagotchi={props.onPlayTamagotchi}
-              onRestTamagotchi={props.onRestTamagotchi}/>
+              onRestTamagotchi={props.onRestTamagotchi}
+              />
       <style jsx>{`
           .egg{
             width:375px;
@@ -34,6 +35,7 @@ Egg.propTypes = {
   user: PropTypes.object,
   onFeedTamagotchi: PropTypes.func,
   onPlayTamagotchi: PropTypes.func,
-  onRestTamagotchi: PropTypes.func
+  onRestTamagotchi: PropTypes.func,
+  onRestart: PropTypes.func
 }
 export default Egg;

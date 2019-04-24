@@ -15,7 +15,8 @@ class App extends React.Component{
       tamagotchi: {
         hunger: 50,
         energy: 50,
-        mood: 50
+        mood: 50,
+        alive: true
       },
       user: {
         money: 100,
@@ -25,6 +26,7 @@ class App extends React.Component{
     this.handleFeedTamagotchi = this.handleFeedTamagotchi.bind(this);
     this.handlePlayTamagotchi = this.handlePlayTamagotchi.bind(this);
     this.handleRestTamagotchi = this.handleRestTamagotchi.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
   }
 
   randColor(){
@@ -34,22 +36,27 @@ class App extends React.Component{
   }
 
   componentDidMount(){
-    this.waitTimeUpdateTimer = setInterval(() =>
-      this.updateTicketElapsedWaitTime(),
-      60000
+    this.resourceTick = setInterval(() =>
+      this.updateResources(),
+      1000
     );
   }
 
-  updateTicketElapsedWaitTime() {
-    let newMasterTicketList = this.state.masterTicketList.slice();
-    newMasterTicketList.forEach((ticket) =>
-      ticket.formattedWaitTime = (ticket.timeOpen).fromNow(true)
-    );
-    this.setState({masterTicketList: newMasterTicketList})
+  updateResources() {
+    var tamagotchiResources = Object.assign({}, this.state.tamagotchi);
+    tamagotchiResources.energy-=(1/3);
+    tamagotchiResources.mood-=(2/3);
+    tamagotchiResources.hunger-=(2.5/3);
+    this.setState({tamagotchi: tamagotchiResources})
+    if (this.state.tamagotchi.energy < 1 || this.state.tamagotchi.hunger < 1 || this.state.tamagotchi.mood < 1) {
+      clearInterval(this.resourceTick);
+      tamagotchiResources.alive = false;
+      this.setState({tamagotchi: tamagotchiResources});
+    }
   }
 
   componentWillUnmount(){
-    clearInterval(this.waitTimeUpdateTimer);
+    clearInterval(this.resourceTick);
   }
 
   componentDidUpdate(){
@@ -59,7 +66,7 @@ class App extends React.Component{
 
   handleFeedTamagotchi(){
     var newTamagotchiHunger = Object.assign({}, this.state.tamagotchi);
-    newTamagotchiHunger.hunger+=1;
+    newTamagotchiHunger.hunger+=5;
     this.setState({tamagotchi: newTamagotchiHunger})
     var newUserFood = Object.assign({}, this.state.user);
     newUserFood.food-=1;
@@ -67,7 +74,6 @@ class App extends React.Component{
   }
 
   handlePlayTamagotchi(){
-    console.log(this.state.tamagotchi);
     var newTamagotchiMood = Object.assign({}, this.state.tamagotchi);
     newTamagotchiMood.mood += 5;
     this.setState({tamagotchi: newTamagotchiMood})
@@ -77,6 +83,18 @@ class App extends React.Component{
     var newTamagotchiEnergy = Object.assign({}, this.state.tamagotchi);
     newTamagotchiEnergy.energy = 100;
     this.setState({tamagotchi: newTamagotchiEnergy})
+  }
+
+  handleRestart(){
+    console.log("handlerestart")
+    var tamagotchiResources = Object.assign({}, this.state.tamagotchi);
+    tamagotchiResources.energy = 50;
+    tamagotchiResources.mood =50;
+    tamagotchiResources.hunger=50;
+    tamagotchiResources.alive=true;
+    this.setState({tamagotchi: tamagotchiResources});
+    this.componentDidMount();
+
   }
 
   render(){
@@ -95,7 +113,8 @@ class App extends React.Component{
                 user={this.state.user}
                 onFeedTamagotchi={this.handleFeedTamagotchi}
                 onPlayTamagotchi={this.handlePlayTamagotchi}
-                onRestTamagotchi={this.handleRestTamagotchi} />}/>
+                onRestTamagotchi={this.handleRestTamagotchi}
+                onRestart={this.handleRestart} />}/>
           <Route component={Error404} />
         </Switch>
       </div>

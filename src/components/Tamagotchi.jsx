@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Tamagotchi(props) {
-
   function moodColor(b){
     let mood = props.tamagotchi.mood;
     let r = 255-(mood*2.55);
@@ -12,23 +11,31 @@ function Tamagotchi(props) {
 
 
   return(
-    <div className='tamagotchi'>
+    <div>
+      {props.tamagotchi.alive ?
+        <div className='tamagotchi'></div> :
+        <div className='dead'><button onClick={props.onRestart}>Restart</button></div>}
       <style jsx>{`
-      .tamagotchi{
-        width:${props.tamagotchi.hunger}px;
-        height:${props.tamagotchi.hunger}px;
-        border: double ${(props.tamagotchi.hunger)/6}px ${moodColor(255)};
-        border-radius:100%;
-        box-sizing:border-box;
-        background-color: ${moodColor(0)};
-        position:absolute;
-        bottom:25%;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    `}</style>
+          .tamagotchi{
+            width:${props.tamagotchi.hunger}px;
+            height:${props.tamagotchi.hunger}px;
+            border: double ${(props.tamagotchi.hunger)/6}px ${moodColor(255)};
+            border-radius:100%;
+            box-sizing:border-box;
+            background-color: ${moodColor(0)};
+            position:absolute;
+            bottom:25%;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+          `}</style>
     </div>
   )
+}
+
+Tamagotchi.propTypes = {
+  tamagotchi: PropTypes.object,
+  onRestart: PropTypes.func
 }
 
 export default Tamagotchi;

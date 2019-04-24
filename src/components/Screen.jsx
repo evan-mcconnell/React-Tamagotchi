@@ -6,11 +6,12 @@ import PropTypes from 'prop-types';
 function Screen(props) {
   return (
     <div className="main">
-      <Tamagotchi tamagotchi={props.tamagotchi} />
+      <Tamagotchi tamagotchi={props.tamagotchi}
+                  onRestart={props.onRestart}/>
       <div>
-        <p>Hunger: {props.tamagotchi.hunger}</p>
-        <p>Mood: {props.tamagotchi.mood}</p>
-        <p>Energy: {props.tamagotchi.energy}</p>
+        <p>Hunger: {Math.floor(props.tamagotchi.hunger)}</p>
+        <p>Mood: {Math.floor(props.tamagotchi.mood)}</p>
+        <p>Energy: {Math.floor(props.tamagotchi.energy)}</p>
       </div>
       <div className='user'>
         <p>Food: {props.user.food}</p>
@@ -28,6 +29,8 @@ function Screen(props) {
             transform: translateX(-50%);
             background-color:lightgrey;
             box-shadow: inset 0px 0px 9px black;
+            padding:15px;
+            box-sizing:border-box;
           }
           p {
             margin: 2px;
