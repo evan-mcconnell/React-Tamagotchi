@@ -6,6 +6,7 @@ import Error404 from './Error404';
 import { Switch, Route } from 'react-router-dom';
 import Moment from 'moment';
 import Egg from './Egg';
+import Store from './Store';
 
 class App extends React.Component{
 
@@ -16,7 +17,8 @@ class App extends React.Component{
         hunger: 50,
         energy: 50,
         mood: 50,
-        alive: true
+        alive: true,
+        sleeping: false
       },
       user: {
         money: 100,
@@ -27,6 +29,7 @@ class App extends React.Component{
     this.handlePlayTamagotchi = this.handlePlayTamagotchi.bind(this);
     this.handleRestTamagotchi = this.handleRestTamagotchi.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
+    this.handleBuyFood = this.handleBuyFood.bind(this);
   }
 
   randColor(){
@@ -82,8 +85,16 @@ class App extends React.Component{
   handleRestTamagotchi(){
     var newTamagotchiEnergy = Object.assign({}, this.state.tamagotchi);
     newTamagotchiEnergy.energy = 100;
-    this.setState({tamagotchi: newTamagotchiEnergy})
-  }
+    newTamagotchiEnergy.sleeping = true;
+    this.setState({tamagotchi: newTamagotchiEnergy});
+    var body = document.getElementsByTagName("body");
+    body[0].classList.add("sleep");
+    setTimeout(() => {
+      body[0].classList.remove("sleep");
+      newTamagotchiEnergy.sleeping = false;
+      this.setState({tamagotchi: newTamagotchiEnergy});
+    }, 5000)
+    }
 
   handleRestart(){
     console.log("handlerestart")
@@ -94,7 +105,14 @@ class App extends React.Component{
     tamagotchiResources.alive=true;
     this.setState({tamagotchi: tamagotchiResources});
     this.componentDidMount();
+  }
 
+  handleBuyFood(){
+    console.log(this.state.user);
+    var newUser = Object.assign({}, this.state.user);
+    newUser.food += 10;
+    newUser.money -= 20;
+    this.setState({user: newUser});
   }
 
   render(){
@@ -104,6 +122,24 @@ class App extends React.Component{
         <style global jsx>{`
           * {
             font-family: 'Dokdo', cursive;
+          }
+          body{
+            background: repeating-linear-gradient(
+              to right,
+              #f6ba52,
+              #f6ba52 10px,
+              #ffd180 10px,
+              #ffd180 20px
+              );
+          }
+          .sleep{
+            background: repeating-linear-gradient(
+              to right,
+              darkslateblue,
+              darkslateblue 10px,
+              midnightblue 10px,
+              midnightblue 20px
+              );
           }
           `}</style>
         <Header/>
@@ -115,6 +151,9 @@ class App extends React.Component{
                 onPlayTamagotchi={this.handlePlayTamagotchi}
                 onRestTamagotchi={this.handleRestTamagotchi}
                 onRestart={this.handleRestart} />}/>
+          <Route path='/store' render={()=><Store
+            user={this.state.user}
+            onBuyFood={this.handleBuyFood}/>}/>
           <Route component={Error404} />
         </Switch>
       </div>

@@ -10,6 +10,7 @@ function Egg(props){
       <Buttons onFeedTamagotchi={props.onFeedTamagotchi}
               onPlayTamagotchi={props.onPlayTamagotchi}
               onRestTamagotchi={props.onRestTamagotchi}
+              tamagotchi={props.tamagotchi}
               />
       <style jsx>{`
           .egg{
@@ -21,6 +22,8 @@ function Egg(props){
             border-top-left-radius:55%;
             border-top-right-radius:55%;
             position: relative;
+            left:50%;
+            transform:translateX(-50%);
             background-image:repeating-radial-gradient(red, yellow 10%);
             box-shadow: inset 0px -15px 15px #500000;
           }

@@ -2,17 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 function Buttons(props) {
-  let sleeping;
-  let sleepButtonText = "Sleep";
-  function handleClickOnSleep() {
-    sleeping = true;
+  let sleep;
+  let click;
+
+  {props.tamagotchi.sleeping ?
+    sleep = "sleeping":
+    sleep = ""};
+
+  function handleSleepClick() {
+    if (!props.tamagotchi.sleeping) {
+      props.onRestTamagotchi()
+    }
   }
+
+  function handlePlayClick() {
+    if (!props.tamagotchi.sleeping) {
+      props.onPlayTamagotchi()
+    }
+  }
+
+  function handleFeedClick() {
+    if (!props.tamagotchi.sleeping) {
+      props.onFeedTamagotchi()
+    }
+  }
+
 
   return(
     <div className="buttons">
-      <button onClick={props.onFeedTamagotchi}>Feed</button>
-      <button onClick={props.onPlayTamagotchi}>Play</button>
-      <button onClick={props.onRestTamagotchi}>sleep</button>
+      <button className={`${sleep}`} onClick={handleFeedClick}>Feed</button>
+      <button className={`${sleep}`} onClick={handlePlayClick}>Play</button>
+      <button className={`${sleep}`} onClick={handleSleepClick}>sleep</button>
       <style jsx>{`
           .buttons {
             width: 100%;
@@ -30,6 +50,11 @@ function Buttons(props) {
             background-color:red;
             color:white;
             box-shadow: 0px 3px 5px black;
+          }
+          .sleeping {
+            border:solid 2px darkblue;
+            background-color:darkslateblue;
+            color: midnightblue;
           }
             `}</style>
     </div>
