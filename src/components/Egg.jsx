@@ -24,8 +24,8 @@ function Egg(props){
             position: relative;
             left:50%;
             transform:translateX(-50%);
-            background-image:repeating-radial-gradient(red, yellow 10%);
-            box-shadow: inset 0px -15px 15px #500000;
+            background-image:radial-gradient(red, darkred);
+            box-shadow: inset 0px 0px 10px rgba(255,255,255,.75), 0px 0px 20px rgba(0,0,0,.9);
           }
         `}
       </style>

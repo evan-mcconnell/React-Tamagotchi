@@ -50,6 +50,8 @@ class App extends React.Component{
     tamagotchiResources.energy-=(1/3);
     tamagotchiResources.mood-=(2/3);
     tamagotchiResources.hunger-=(2.5/3);
+    tamagotchiResources.mood > tamagotchiResources.hunger ? tamagotchiResources.mood = tamagotchiResources.hunger : null;
+    tamagotchiResources.mood > tamagotchiResources.energy ? tamagotchiResources.mood = tamagotchiResources.energy : null;
     this.setState({tamagotchi: tamagotchiResources})
     if (this.state.tamagotchi.energy < 1 || this.state.tamagotchi.hunger < 1 || this.state.tamagotchi.mood < 1) {
       clearInterval(this.resourceTick);
@@ -68,21 +70,26 @@ class App extends React.Component{
   }
 
   handleFeedTamagotchi(){
-    var newTamagotchiHunger = Object.assign({}, this.state.tamagotchi);
-    newTamagotchiHunger.hunger+=5;
-    this.setState({tamagotchi: newTamagotchiHunger})
-    var newUserFood = Object.assign({}, this.state.user);
-    newUserFood.food-=1;
-    this.setState({user: newUserFood})
+    if (this.state.user.food > 0 && this.state.tamagotchi.hunger < 96 ) {
+      var newTamagotchiHunger = Object.assign({}, this.state.tamagotchi);
+      newTamagotchiHunger.hunger+=5;
+      this.setState({tamagotchi: newTamagotchiHunger})
+      var newUserFood = Object.assign({}, this.state.user);
+      newUserFood.food-=1;
+      this.setState({user: newUserFood})
+    }
   }
 
   handlePlayTamagotchi(){
-    var newTamagotchiMood = Object.assign({}, this.state.tamagotchi);
-    newTamagotchiMood.mood += 5;
-    this.setState({tamagotchi: newTamagotchiMood})
+    var newTamagotchi = Object.assign({}, this.state.tamagotchi);
+    if (newTamagotchi.mood < newTamagotchi.energy && newTamagotchi.mood < newTamagotchi.hunger) {
+      newTamagotchi.mood += 5;
+      this.setState({tamagotchi: newTamagotchi})
+    }
   }
 
   handleRestTamagotchi(){
+    clearInterval(this.resourceTick);
     var newTamagotchiEnergy = Object.assign({}, this.state.tamagotchi);
     newTamagotchiEnergy.energy = 100;
     newTamagotchiEnergy.sleeping = true;
@@ -92,6 +99,7 @@ class App extends React.Component{
     setTimeout(() => {
       body[0].classList.remove("sleep");
       newTamagotchiEnergy.sleeping = false;
+      this.componentDidMount();
       this.setState({tamagotchi: newTamagotchiEnergy});
     }, 5000)
     }
@@ -108,11 +116,13 @@ class App extends React.Component{
   }
 
   handleBuyFood(){
-    console.log(this.state.user);
-    var newUser = Object.assign({}, this.state.user);
-    newUser.food += 10;
-    newUser.money -= 20;
-    this.setState({user: newUser});
+    if (this.state.user.money > 19 ) {
+      console.log(this.state.user);
+      var newUser = Object.assign({}, this.state.user);
+      newUser.food += 10;
+      newUser.money -= 20;
+      this.setState({user: newUser});
+    }
   }
 
   render(){
@@ -142,7 +152,7 @@ class App extends React.Component{
               );
           }
           `}</style>
-        <Header/>
+        <Header state={this.state}/>
         <Switch>
           <Route exact path='/' render={()=><Egg
                 tamagotchi={this.state.tamagotchi}

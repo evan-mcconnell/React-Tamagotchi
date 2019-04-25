@@ -17,10 +17,14 @@ function Tamagotchi(props) {
         <div className='dead'><button onClick={props.onRestart}>Restart</button></div>}
       <style jsx>{`
           .tamagotchi{
+            max-width:100px;
+            max-height:100px;
             width:${props.tamagotchi.hunger}px;
             height:${props.tamagotchi.hunger}px;
             border: double ${(props.tamagotchi.hunger)/6}px ${moodColor(255)};
             border-radius:100%;
+            border-bottom-left-radius: ${props.tamagotchi.energy}%;
+            border-bottom-right-radius: ${props.tamagotchi.energy}%;
             box-sizing:border-box;
             background-color: ${moodColor(0)};
             position:absolute;

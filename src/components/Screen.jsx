@@ -9,19 +9,13 @@ function Screen(props) {
       <Tamagotchi tamagotchi={props.tamagotchi}
                   onRestart={props.onRestart}/>
       <div>
-        <p>Hunger: {Math.floor(props.tamagotchi.hunger)}</p>
-        <p>Mood: {Math.floor(props.tamagotchi.mood)}</p>
-        <p>Energy: {Math.floor(props.tamagotchi.energy)}</p>
-      </div>
-      <div className='user'>
-        <p>Food: {props.user.food}</p>
-        <p>Money: {props.user.money}</p>
+        <p>Tamagotchi!</p>
       </div>
       <style jsx>{`
           .main {
             width: 60%;
             height: 40%;
-            border-radius: 10%;
+            border-radius: 5%;
             border: 1px solid black;
             position: absolute;
             top: 25%;
