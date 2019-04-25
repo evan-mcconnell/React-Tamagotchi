@@ -8,10 +8,10 @@ function Egg(props){
     <div className='egg'>
       <Screen tamagotchi={props.tamagotchi} user={props.user} onRestart={props.onRestart}/>
       <Buttons onFeedTamagotchi={props.onFeedTamagotchi}
-              onPlayTamagotchi={props.onPlayTamagotchi}
-              onRestTamagotchi={props.onRestTamagotchi}
-              tamagotchi={props.tamagotchi}
-              />
+        onPlayTamagotchi={props.onPlayTamagotchi}
+        onRestTamagotchi={props.onRestTamagotchi}
+        tamagotchi={props.tamagotchi}
+      />
       <style jsx>{`
           .egg{
             width:375px;
@@ -30,7 +30,7 @@ function Egg(props){
         `}
       </style>
     </div>
-  )
+  );
 }
 
 Egg.propTypes = {
@@ -40,5 +40,5 @@ Egg.propTypes = {
   onPlayTamagotchi: PropTypes.func,
   onRestTamagotchi: PropTypes.func,
   onRestart: PropTypes.func
-}
+};
 export default Egg;

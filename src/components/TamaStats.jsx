@@ -16,15 +16,15 @@ function TamaStats(props){
         <p>{Math.floor(props.tamagotchi.hunger)}</p>
       </div>
       <h3>Mood : </h3>
-        <div className="progressBar">
-          <div className="progressMood"></div>
-          <p>{Math.floor(props.tamagotchi.mood)}</p>
-        </div>
+      <div className="progressBar">
+        <div className="progressMood"></div>
+        <p>{Math.floor(props.tamagotchi.mood)}</p>
+      </div>
       <h3>Energy : </h3>
-        <div className="progressBar">
-          <div className="progressEnergy"></div>
-          <p>{Math.floor(props.tamagotchi.energy)}</p>
-        </div>
+      <div className="progressBar">
+        <div className="progressEnergy"></div>
+        <p>{Math.floor(props.tamagotchi.energy)}</p>
+      </div>
       <style jsx>{`
         .progressBar {
           border: 1px solid black;
@@ -54,11 +54,11 @@ function TamaStats(props){
           position: absolute;
           right: 10px;
           top: -15px;
-          color: darkred;
+          color: white;
         }
         `}</style>
     </div>
-  )
+  );
 }
 
 

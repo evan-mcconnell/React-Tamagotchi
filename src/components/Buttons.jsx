@@ -1,29 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 function Buttons(props) {
   let sleep;
   let click;
 
   {props.tamagotchi.sleeping ?
-    sleep = "sleeping":
-    sleep = ""};
+    sleep = 'sleeping':
+    sleep = '';}
 
   function handleSleepClick() {
     if (!props.tamagotchi.sleeping) {
-      props.onRestTamagotchi()
+      props.onRestTamagotchi();
     }
   }
 
   function handlePlayClick() {
     if (!props.tamagotchi.sleeping) {
-      props.onPlayTamagotchi()
+      props.onPlayTamagotchi();
     }
   }
 
   function handleFeedClick() {
     if (!props.tamagotchi.sleeping) {
-      props.onFeedTamagotchi()
+      props.onFeedTamagotchi();
     }
   }
 
@@ -58,13 +58,13 @@ function Buttons(props) {
           }
             `}</style>
     </div>
-  )
+  );
 }
 
 Buttons.propTypes = {
   onFeedTamagotchi: PropTypes.func,
   onPlayTamagotchi: PropTypes.func,
   onRestTamagotchi: PropTypes.func
-}
+};
 
 export default Buttons;

@@ -7,7 +7,7 @@ function Screen(props) {
   return (
     <div className="main">
       <Tamagotchi tamagotchi={props.tamagotchi}
-                  onRestart={props.onRestart}/>
+        onRestart={props.onRestart}/>
       <div>
         <p>Tamagotchi!</p>
       </div>
@@ -34,12 +34,12 @@ function Screen(props) {
           }
       `}</style>
     </div>
-  )
+  );
 }
 
 Screen.propTypes = {
   tamagotchi: PropTypes.object,
   user: PropTypes.object,
-}
+};
 
 export default Screen;

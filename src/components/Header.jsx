@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 function Header(props){
   var linkStyle = {
     textDecoration:'none',
-  }
+  };
   return (
     <div className='header'>
       <style jsx>{`

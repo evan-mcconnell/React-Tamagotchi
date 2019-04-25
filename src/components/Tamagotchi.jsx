@@ -6,7 +6,7 @@ function Tamagotchi(props) {
     let mood = props.tamagotchi.mood;
     let r = 255-(mood*2.55);
     let g = mood*2.55;
-    return (`rgb(${r},${g},${b})`)
+    return (`rgb(${r},${g},${b})`);
   }
 
 
@@ -34,12 +34,12 @@ function Tamagotchi(props) {
           }
           `}</style>
     </div>
-  )
+  );
 }
 
 Tamagotchi.propTypes = {
   tamagotchi: PropTypes.object,
   onRestart: PropTypes.func
-}
+};
 
 export default Tamagotchi;
