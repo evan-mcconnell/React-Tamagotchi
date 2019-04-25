@@ -14,6 +14,7 @@ function Header(props){
         p{
           color:white;
           display:inline;
+          font-size: 1.2em;
         }
         .header{
           padding: 5px;
@@ -41,11 +42,11 @@ function Header(props){
       <TamaStats tamagotchi={props.state.tamagotchi}/>
       <div className='links'>
         <Link style={linkStyle} to='/'><h1>Tamagotchi</h1></Link>
-        <Link style={linkStyle} to="/"><p>Your Pet</p></Link>
+        <Link style={linkStyle} to="/"><p>Your Pet </p></Link>
         <p> | </p>
-        <Link style={linkStyle} to="/store"><p>Store</p></Link>
+        <Link style={linkStyle} to="/store"><p> Store </p></Link>
         <p> | </p>
-        <Link style={linkStyle} to="/work"><p>Work</p></Link>
+        <Link style={linkStyle} to="/work"><p> Work</p></Link>
       </div>
       <UserStats user={props.state.user} />
     </div>

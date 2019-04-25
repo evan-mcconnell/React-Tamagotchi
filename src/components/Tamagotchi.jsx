@@ -19,6 +19,8 @@ function Tamagotchi(props) {
           .tamagotchi{
             max-width:100px;
             max-height:100px;
+            min-width:10px;
+            min-height:10px;
             width:${props.tamagotchi.hunger}px;
             height:${props.tamagotchi.hunger}px;
             border: double ${(props.tamagotchi.hunger)/6}px ${moodColor(255)};

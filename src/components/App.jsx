@@ -8,7 +8,6 @@ import Store from './Store';
 import Work from './Work';
 
 class App extends React.Component{
-
   constructor(props){
     super(props);
     this.state = {
@@ -20,17 +19,21 @@ class App extends React.Component{
         sleeping: false
       },
       user: {
-        money: 100,
+        money: 1000,
         food: 50,
         score: 0
-      }
+      },
+      interval: []
     };
+
     this.handleFeedTamagotchi = this.handleFeedTamagotchi.bind(this);
     this.handlePlayTamagotchi = this.handlePlayTamagotchi.bind(this);
     this.handleRestTamagotchi = this.handleRestTamagotchi.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
     this.handleBuyFood = this.handleBuyFood.bind(this);
     this.handleDoWork = this.handleDoWork.bind(this);
+    this.handleUpgradeWorkTo6 = this.handleUpgradeWorkTo6.bind(this);
+    this.handleUpgradeWorkTo12 = this.handleUpgradeWorkTo12.bind(this);
   }
 
   randColor(){
@@ -59,6 +62,8 @@ class App extends React.Component{
     this.setState({user: userResources});
     if (this.state.tamagotchi.energy < 1 || this.state.tamagotchi.hunger < 1 || this.state.tamagotchi.mood < 1) {
       clearInterval(this.resourceTick);
+      clearInterval(this.upgradeWorkTo6);
+      clearInterval(this.upgradeWorkTo12);
       tamagotchiResources.alive = false;
       this.setState({tamagotchi: tamagotchiResources});
     }
@@ -66,6 +71,8 @@ class App extends React.Component{
 
   componentWillUnmount(){
     clearInterval(this.resourceTick);
+    clearInterval(this.upgradeWorkTo6);
+    clearInterval(this.upgradeWorkTo12);
   }
 
   componentDidUpdate(){
@@ -74,7 +81,7 @@ class App extends React.Component{
   handleFeedTamagotchi(){
     if (this.state.user.food > 0 && this.state.tamagotchi.hunger < 96 ) {
       var newTamagotchiHunger = Object.assign({}, this.state.tamagotchi);
-      newTamagotchiHunger.hunger+=5;
+      newTamagotchiHunger.hunger+=1;
       this.setState({tamagotchi: newTamagotchiHunger});
       var newUserFood = Object.assign({}, this.state.user);
       newUserFood.food-=1;
@@ -136,6 +143,35 @@ class App extends React.Component{
     this.setState({user: newUser});
   }
 
+  handleUpgradeWorkTo6() {
+    if(this.state.user.money >= 50) {
+      var userResources = Object.assign({}, this.state.user);
+      userResources.money -= 50;
+      this.setState({user: userResources});
+      this.upgradeWorkTo6 = setInterval(() =>
+        this.autoMoney(),
+      10000)
+    }
+  }
+
+  handleUpgradeWorkTo12() {
+    if(this.state.user.money >= 80) {
+      var userResources = Object.assign({}, this.state.user);
+      userResources.money -= 80;
+      this.setState({user: userResources});
+      this.upgradeWorkTo12 = setInterval(() =>
+        this.autoMoney(),
+      5000)
+    }
+  }
+
+  autoMoney() {
+    var newUserResources = Object.assign({}, this.state.user);
+    newUserResources.money += 1;
+    this.setState({user: newUserResources});
+  }
+
+
   render(){
     return (
       <div>
@@ -174,7 +210,10 @@ class App extends React.Component{
             onRestart={this.handleRestart} />}/>
           <Route path='/store' render={()=><Store
             onBuyFood={this.handleBuyFood}/>}/>
-          <Route path='/work' render={()=><Work onDoWork={this.handleDoWork} /> }/>
+          <Route path='/work' render={()=><Work
+            onDoWork={this.handleDoWork}
+            onUpgradeTo6={this.handleUpgradeWorkTo6}
+            onUpgradeTo12={this.handleUpgradeWorkTo12} /> }/>
           <Route component={Error404} />
         </Switch>
       </div>
